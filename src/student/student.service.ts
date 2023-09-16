@@ -135,14 +135,14 @@ export class StudentService {
         return await this.admin.findOne({ email: info.email });
       }
 
-      async findmark(info: { studentId: string, date: number}): Promise<Mark | undefined> {
+      async findmark(info: { studentId: string, date: string}): Promise<Mark | undefined> {
         console.log(info);
         const mark = await this.mark.findOne({ student_id: info.studentId, date: info.date });
         console.log(mark);
         return mark;
       }
 
-      async findabsent(info: { studentId: string, date: number}): Promise<Abscent | undefined> {
+      async findabsent(info: { studentId: string, date: string}): Promise<Abscent | undefined> {
       const mabsent = await this.abcsent.findOne({ student_id: info.studentId, date: info.date });
       console.log(mabsent);  
       return mabsent;
@@ -282,24 +282,62 @@ export class StudentService {
 
 
       async deletemark(data: { studentId: string; date: number }) {
-        const mark = await this.findmark(data)
+        
+        const date = new Date();
+    
+    // Get the day name (e.g., Monday, Tuesday)
+    const dayName = this.getDayName(date);
+
+    // Get the month name (e.g., January, February)
+    const monthName = this.getMonthName(date);
+
+    // Get the year (e.g., 2023)
+    const year = date.getFullYear();
+
+   const  datee = `${dayName}, ${monthName} ${year}`;
+   const customData = {
+    studentId: data.studentId,
+    date: datee
+    // Add any additional properties you need
+  }; 
+
+   const mark = await this.findmark(customData)
         console.log(mark);
         if (mark) {
-         await this.mark.deleteOne({ student_id: data.studentId, date: data.date })
+         await this.mark.deleteOne({ student_id: data.studentId, date: datee })
           console.log("Successfull");
           return "successful"
         }else {
 
-          return "incorrect password"
+          return "incorrect password" 
         }
       }
 
       async deleteabscent(data: { studentId: string; date: number }) {
-        
-        const abscent = await this.findabsent(data)
+
+        const date = new Date();
+    
+        // Get the day name (e.g., Monday, Tuesday)
+        const dayName = this.getDayName(date);
+    
+        // Get the month name (e.g., January, February)
+        const monthName = this.getMonthName(date);
+    
+        // Get the year (e.g., 2023)
+        const year = date.getFullYear();
+    
+       const  datee = `${dayName}, ${monthName} ${year}`;
+
+       const customData = {
+        studentId: data.studentId,
+        date: datee
+        // Add any additional properties you need
+      };        
+        const abscent = await this.findabsent(customData)
+
         console.log(abscent);
         if (abscent) {
-          await this.abcsent.deleteOne({ student_id: data.studentId, date: data.date })
+          await this.abcsent.deleteOne({ student_id: data.studentId, date: datee })
           console.log("REakky");
           return "successful"
         }else {

@@ -43,6 +43,7 @@ export class AuthService {
         const user = await this.studentService.addStudent(dto);
         const tokens = await this.getTokens(user.email, user.role);
         await this.updateRtHash(user.id, tokens.refresh_token);
+        console.log("user");
         return { ...tokens, role: user.role };
       }
 

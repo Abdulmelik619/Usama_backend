@@ -11,7 +11,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 @Module({
   imports: [AuthModule, 
     StudentModule,        
-    MongooseModule.forRoot('mongodb+srv://Abdulmelik619:jMV6RfKfzpJeVBdF@cluster0.457xzt4.mongodb.net/KuranTutorial?retryWrites=true&w=majority'), 
+    MongooseModule.forRoot('mongodb+srv://Abdulmelik619:jMV6RfKfzpJeVBdF@cluster0.457xzt4.mongodb.net/KuranTutorial1?retryWrites=true&w=majority'), 
     UsatzModule, 
     ScheduleModule.forRoot()
 ],
